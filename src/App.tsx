@@ -1,8 +1,73 @@
+import { useState, useEffect } from 'react';
+import VehicleForm from './components/VehicleForm';
+import SlotDashboard from './components/SlotDashboard';
+import { initialSlots } from './data/mockSlots';
+import { Slot, SlotStatus, VehicleType } from './types';
+import axios from 'axios';
+import AddSlotForm from './components/AddSlotForm';
+const typeToSlotMap: Record<VehicleType, Slot['type'][]> = {
+  Car: ['Regular', 'Compact'],
+  Bike: ['Bike'],
+  EV: ['EV'],
+  Handicap: ['Accessible'],
+};
+
+
+
+const normalizeSlot = (s: any): Slot => ({
+  id: s._id || s.id,
+  number: s.number,
+  type: s.type,
+  assignedTo: s.assignedTo || '',
+  status: s.status as SlotStatus 
+});
+
 function App() {
+  const [slots, setSlots] = useState<Slot[]>([]);
+   useEffect(() => {
+  axios.get('http://localhost:5000/api/slots')
+    .then(res => {
+      const parsedSlots: Slot[] = res.data.map(normalizeSlot);
+      setSlots(parsedSlots); 
+    })
+    .catch(err => console.error(err));
+}, []);
+
+  const fetchSlots = () => {
+  axios.get('http://localhost:5000/api/slots')
+    .then(res => {
+      const parsed: Slot[] = res.data.map(normalizeSlot);
+      setSlots(parsed);
+    });
+};
+
+useEffect(fetchSlots, []);
+
+  const addVehicle = (plate: string, type: VehicleType) => {
+    const candidates = typeToSlotMap[type];
+    const availableSlot = slots.find(s => candidates.includes(s.type) && s.status === 'Available');
+
+    if (!availableSlot) {
+      alert('No available slot found!');
+      return;
+    }
+
+    const updatedSlots = slots.map((s: Slot) =>
+      s.id === availableSlot.id
+        ? { ...s, status: 'Occupied', assignedTo: plate }
+        : s
+    );
+    setSlots(updatedSlots);
+  };
+
   return (
-    <div className="p-8">
-      <h1 className="text-4xl text-blue-600 font-bold">Mall Parking System</h1>
+    <div className="p-6 max-w-4xl mx-auto">
+      <h1 className="text-3xl font-bold mb-4">Mall Parking System</h1>
+      <AddSlotForm onAdd={fetchSlots} />
+      <VehicleForm onAdd={addVehicle} />
+      <SlotDashboard slots={slots} />
     </div>
   );
 }
+
 export default App;
