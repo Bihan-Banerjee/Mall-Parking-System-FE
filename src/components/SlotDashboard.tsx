@@ -62,13 +62,7 @@ export default function SlotDashboard({ slots, onUpdate }: Readonly<Props>) {
           <option value="Accessible">Accessible</option>
         </select>
 
-        <input
-          type="text"
-          placeholder="Search by plate..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="border px-2 py-1 rounded"
-        />
+        
       </div>
 
       {/* Slots */}
