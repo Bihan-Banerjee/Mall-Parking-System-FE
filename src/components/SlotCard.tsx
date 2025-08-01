@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Slot, VehicleType } from '../types';
+import { Slot } from '../types';
 import axios from 'axios';
 
 interface Props {
@@ -12,12 +12,7 @@ export default function SlotCard({ slot, onUpdate }: Readonly<Props>) {
   const [targetSlots, setTargetSlots] = useState<Slot[]>([]);
   const [selectedTarget, setSelectedTarget] = useState<string>('');
 
-  const color =
-    slot.status === 'Available'
-      ? 'bg-green-100'
-      : slot.status === 'Occupied'
-      ? 'bg-red-100'
-      : 'bg-yellow-100';
+  
 
   const refresh = () => {
     if (onUpdate) onUpdate();

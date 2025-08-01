@@ -16,14 +16,14 @@ export default function VehicleForm({ onAdd, slots }: Props) {
       <h2 className="text-xl font-bold mb-2">Vehicle Entry</h2>
 
       <input
-        className="border p-2 w-full mb-2 rounded"
+        className="border p-2 w-full mb-2 rounded bg-white hover:bg-white/80 hover:shadow-xl hover:scale-105 transition-transform duration-150"
         placeholder="Number Plate"
         value={plate}
         onChange={(e) => setPlate(e.target.value.toUpperCase())}
       />
 
       <select
-        className="border p-2 w-full mb-2 rounded"
+        className="border p-2 w-full mb-2 rounded bg-white hover:bg-white/80 hover:shadow-xl hover:scale-105 transition-transform duration-150"
         value={type}
         onChange={(e) => setType(e.target.value as VehicleType)}
       >
@@ -34,7 +34,7 @@ export default function VehicleForm({ onAdd, slots }: Props) {
       </select>
 
       <select
-        className="border p-2 w-full mb-2 rounded"
+        className="border p-2 w-full mb-2 rounded bg-white hover:bg-white/80 hover:shadow-xl hover:scale-105 transition-transform duration-150"
         value={overrideSlot}
         onChange={(e) => setOverrideSlot(e.target.value)}
       >
@@ -47,7 +47,7 @@ export default function VehicleForm({ onAdd, slots }: Props) {
       </select>
 
       <button
-        className="bg-indigo-600 text-white font-semibold px-4 py-2 rounded-md hover:bg-indigo-700 active:scale-95 transition-transform duration-150"
+        className="bg-indigo-600 text-white font-semibold px-4 py-2 rounded-md hover:bg-indigo-700 active:scale-95 hover:scale-105 transition-transform duration-150"
         onClick={() => {
           if (plate) {
             onAdd(plate, type, overrideSlot || undefined);
