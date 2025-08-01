@@ -1,6 +1,6 @@
 import { Slot } from '../types';
 import SlotCard from './SlotCard';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 interface Props {
   slots: Slot[];
   onUpdate: () => void;
@@ -13,6 +13,17 @@ export default function SlotDashboard({ slots, onUpdate }: Readonly<Props>) {
   const maintenance = slots.filter(s => s.status === 'Maintenance').length;
   const [typeFilter, setTypeFilter] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState('');
+
+  const [currentPage, setCurrentPage] = useState(1);
+    useEffect(() => {
+    setCurrentPage(1);
+  }, [slots]);
+
+  const slotsPerPage = 12;
+  const totalPages = Math.ceil(slots.length / slotsPerPage);
+  const startIndex = (currentPage - 1) * slotsPerPage;
+  const paginatedSlots = slots.slice(startIndex, startIndex + slotsPerPage);
+
 
   const filtered = slots.filter((s) => {
     if (typeFilter !== 'All' && s.type !== typeFilter) return false;
@@ -69,10 +80,32 @@ export default function SlotDashboard({ slots, onUpdate }: Readonly<Props>) {
         <span>Maintenance: {maintenance}</span>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-        {slots.map((slot: Slot) => (
-            <SlotCard key={slot.id} slot={slot} onUpdate={onUpdate}/>
+        {paginatedSlots.map((slot) => (
+          <SlotCard key={slot.id} slot={slot} onUpdate={onUpdate} />
         ))}
       </div>
+      <div className="flex justify-center gap-4 mt-6">
+        <button
+          disabled={currentPage === 1}
+          onClick={() => setCurrentPage((prev) => prev - 1)}
+          className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+        >
+          ◀ Previous
+        </button>
+
+        <span className="text-sm font-semibold self-center">
+          Page {currentPage} of {totalPages}
+        </span>
+
+        <button
+          disabled={currentPage === totalPages}
+          onClick={() => setCurrentPage((prev) => prev + 1)}
+          className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+        >
+          Next ▶
+        </button>
+      </div>
+
     </div>
   );
 }
