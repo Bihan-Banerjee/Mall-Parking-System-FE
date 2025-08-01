@@ -43,22 +43,35 @@ function App() {
 
 useEffect(fetchSlots, []);
 
-  const addVehicle = (plate: string, type: VehicleType) => {
-    const candidates = typeToSlotMap[type];
-    const availableSlot = slots.find(s => candidates.includes(s.type) && s.status === 'Available');
+  const addVehicle = async (plate: string, type: VehicleType) => {
+  try {
+    const slotTypeMap: Record<VehicleType, Slot['type']> = {
+    Car: 'Regular',
+    Bike: 'Bike',
+    EV: 'EV',
+    Handicap: 'Accessible'
+  };
+
+    const mappedType = slotTypeMap[type];
+
+    const availableSlot = slots.find(s => s.status === 'Available' && s.type === mappedType);
 
     if (!availableSlot) {
-      alert('No available slot found!');
+      alert('No available slot for this type');
       return;
     }
 
-    const updatedSlots = slots.map((s: Slot) =>
-      s.id === availableSlot.id
-        ? { ...s, status: 'Occupied', assignedTo: plate }
-        : s
-    );
-    setSlots(updatedSlots);
-  };
+    await axios.patch(`http://localhost:5000/api/slots/${availableSlot.id}`, {
+      assignedTo: plate,
+      status: 'Occupied',
+      entryTime: new Date(), // ✅ This is where you add the entryTime
+    });
+
+    fetchSlots(); // Refresh after update
+  } catch (err) {
+    console.error('Failed to assign vehicle:', err);
+  }
+};
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
