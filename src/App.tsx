@@ -5,7 +5,7 @@ import { Slot, SlotStatus, SlotType, VehicleType } from "./types";
 import axios from "axios";
 import AddSlotForm from "./components/AddSlotForm";
 import { WavyBackground } from "./components/ui/wavy-background";
-
+import { MorphingText } from "./components/magicui/morphing-text";
 const typeToSlotMap: Record<VehicleType, SlotType[]> = {
   Car: ["Regular", "Compact"],
   Bike: ["Bike"],
@@ -93,9 +93,7 @@ function App() {
       {/* Foreground Scrollable Content */}
       <div className="relative z-10 min-h-screen overflow-y-auto">
         <div className="max-w-5xl mx-auto py-16 px-4 sm:px-6 lg:px-8 space-y-6">
-          <h1 className="text-4xl font-extrabold text-center text-blue-700">
-            Mall Parking System
-          </h1>
+          <MorphingText texts={["MOTORQ", "Parking System"]} />
           <div className="grid grid-cols-1 gap-6">
             <AddSlotForm onAdd={fetchSlots} />
             <VehicleForm onAdd={addVehicle} slots={slots} />

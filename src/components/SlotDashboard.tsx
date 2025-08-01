@@ -1,35 +1,44 @@
-import { Slot } from '../types';
+import { Slot, SlotType } from '../types';
 import SlotCard from './SlotCard';
 import { useState, useEffect } from 'react';
+
 interface Props {
   slots: Slot[];
   onUpdate: () => void;
 }
 
+// Mapping of vehicle type -> allowed slot types
+const vehicleToSlotMap: Record<string, SlotType[]> = {
+  Car: ['Regular', 'Compact'],
+  Bike: ['Bike'],
+  EV: ['EV'],
+  Handicap: ['Accessible'],
+};
+
 export default function SlotDashboard({ slots, onUpdate }: Readonly<Props>) {
-  const total = slots.length;
-  const free = slots.filter(s => s.status === 'Available').length;
-  const occupied = slots.filter(s => s.status === 'Occupied').length;
-  const maintenance = slots.filter(s => s.status === 'Maintenance').length;
   const [typeFilter, setTypeFilter] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState('');
-
   const [currentPage, setCurrentPage] = useState(1);
-    useEffect(() => {
+
+  useEffect(() => {
     setCurrentPage(1);
   }, [slots]);
 
-  const slotsPerPage = 12;
-  const totalPages = Math.ceil(slots.length / slotsPerPage);
-  const startIndex = (currentPage - 1) * slotsPerPage;
-  const paginatedSlots = slots.slice(startIndex, startIndex + slotsPerPage);
-
-
+  // Filtering
   const filtered = slots.filter((s) => {
-    if (typeFilter !== 'All' && s.type !== typeFilter) return false;
+    if (typeFilter !== 'All') {
+      const compatibleSlotTypes = vehicleToSlotMap[typeFilter] ?? [];
+      if (!compatibleSlotTypes.includes(s.type)) return false;
+    }
     if (searchQuery && !s.assignedTo?.toLowerCase().includes(searchQuery.toLowerCase())) return false;
     return true;
   });
+
+  // Pagination
+  const slotsPerPage = 12;
+  const totalPages = Math.ceil(filtered.length / slotsPerPage);
+  const startIndex = (currentPage - 1) * slotsPerPage;
+  const paginatedSlots = filtered.slice(startIndex, startIndex + slotsPerPage);
 
   const stats = {
     total: slots.length,
@@ -37,6 +46,7 @@ export default function SlotDashboard({ slots, onUpdate }: Readonly<Props>) {
     occupied: slots.filter((s) => s.status === 'Occupied').length,
     maintenance: slots.filter((s) => s.status === 'Maintenance').length,
   };
+
   return (
     <div className="mt-6">
       {/* Stats */}
@@ -54,24 +64,30 @@ export default function SlotDashboard({ slots, onUpdate }: Readonly<Props>) {
           onChange={(e) => setTypeFilter(e.target.value)}
           className="border px-2 py-1 rounded"
         >
-          <option value="All">All Types</option>
-          <option value="Regular">Regular</option>
-          <option value="Compact">Compact</option>
+          <option value="All">All Vehicles</option>
+          <option value="Car">Car</option>
           <option value="Bike">Bike</option>
           <option value="EV">EV</option>
-          <option value="Accessible">Accessible</option>
+          <option value="Handicap">Handicap</option>
         </select>
 
-        
+        <input
+          type="text"
+          placeholder="Search by plate"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="border px-2 py-1 rounded"
+        />
       </div>
 
       {/* Slots */}
-      
       <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
         {paginatedSlots.map((slot) => (
           <SlotCard key={slot.id} slot={slot} onUpdate={onUpdate} />
         ))}
       </div>
+
+      {/* Pagination */}
       <div className="flex justify-center gap-4 mt-6">
         <button
           disabled={currentPage === 1}
@@ -93,7 +109,6 @@ export default function SlotDashboard({ slots, onUpdate }: Readonly<Props>) {
           Next ▶
         </button>
       </div>
-
     </div>
   );
 }

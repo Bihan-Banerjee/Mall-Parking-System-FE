@@ -12,18 +12,18 @@ export default function VehicleForm({ onAdd, slots }: Props) {
   const [overrideSlot, setOverrideSlot] = useState<string>('');
 
   return (
-    <div className="p-4 bg-white rounded shadow">
+    <div className="p-4 bg-white/80 rounded shadow hover:shadow-xl hover:bg-white">
       <h2 className="text-xl font-bold mb-2">Vehicle Entry</h2>
 
       <input
-        className="border p-2 w-full mb-2"
+        className="border p-2 w-full mb-2 rounded"
         placeholder="Number Plate"
         value={plate}
         onChange={(e) => setPlate(e.target.value.toUpperCase())}
       />
 
       <select
-        className="border p-2 w-full mb-2"
+        className="border p-2 w-full mb-2 rounded"
         value={type}
         onChange={(e) => setType(e.target.value as VehicleType)}
       >
@@ -34,7 +34,7 @@ export default function VehicleForm({ onAdd, slots }: Props) {
       </select>
 
       <select
-        className="border p-2 w-full mb-2"
+        className="border p-2 w-full mb-2 rounded"
         value={overrideSlot}
         onChange={(e) => setOverrideSlot(e.target.value)}
       >
