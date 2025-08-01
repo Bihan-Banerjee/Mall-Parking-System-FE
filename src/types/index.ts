@@ -14,4 +14,6 @@ export interface Slot {
   type: 'Regular' | 'Compact' | 'Bike' | 'EV' | 'Accessible';
   status: SlotStatus;
   assignedTo?: string; 
+  entryTime?: string | Date | null;
+  exitTime?: string | Date | null;
 }
