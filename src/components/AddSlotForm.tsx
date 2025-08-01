@@ -31,7 +31,7 @@ export default function AddSlotForm({ onAdd }: Readonly<Props>) {
   return (
     <form onSubmit={handleSubmit} className="flex gap-2 items-end mb-4">
       <div>
-        <label className="block text-sm">Slot Number</label>
+        <label htmlFor="slotNumber" className="block text-sm">Slot Number</label>
         <input
           className="border rounded px-2 py-1"
           value={number}
@@ -40,7 +40,7 @@ export default function AddSlotForm({ onAdd }: Readonly<Props>) {
         />
       </div>
       <div>
-        <label className="block text-sm">Type</label>
+        <label htmlFor="slotType" className="block text-sm">Type</label>
         <select
           className="border rounded px-2 py-1"
           value={type}

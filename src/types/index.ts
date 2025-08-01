@@ -7,7 +7,7 @@ export interface Vehicle {
 }
 
 export type SlotStatus = 'Available' | 'Occupied' | 'Maintenance';
-
+export type SlotType = 'Regular' | 'Compact' | 'Bike' | 'EV' | 'Accessible';
 export interface Slot {
   id: string;
   number: string;

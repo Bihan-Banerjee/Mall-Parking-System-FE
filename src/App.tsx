@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import VehicleForm from './components/VehicleForm';
 import SlotDashboard from './components/SlotDashboard';
 import { initialSlots } from './data/mockSlots';
-import { Slot, SlotStatus, VehicleType } from './types';
+import { Slot, SlotStatus, SlotType, VehicleType } from './types';
 import axios from 'axios';
 import AddSlotForm from './components/AddSlotForm';
 const typeToSlotMap: Record<VehicleType, Slot['type'][]> = {
@@ -17,7 +17,7 @@ const typeToSlotMap: Record<VehicleType, Slot['type'][]> = {
 const normalizeSlot = (s: any): Slot => ({
   id: s._id || s.id,
   number: s.number,
-  type: s.type,
+  type: s.type as SlotType,
   assignedTo: s.assignedTo || '',
   status: s.status as SlotStatus 
 });
@@ -65,7 +65,7 @@ useEffect(fetchSlots, []);
       <h1 className="text-3xl font-bold mb-4">Mall Parking System</h1>
       <AddSlotForm onAdd={fetchSlots} />
       <VehicleForm onAdd={addVehicle} />
-      <SlotDashboard slots={slots} />
+      <SlotDashboard slots={slots} onUpdate={fetchSlots} />
     </div>
   );
 }
