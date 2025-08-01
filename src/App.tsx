@@ -67,12 +67,19 @@ function App() {
   };
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-4">Mall Parking System</h1>
-      <AddSlotForm onAdd={fetchSlots} />
-      <VehicleForm onAdd={addVehicle} slots={slots} />
-      <SlotDashboard slots={slots} onUpdate={fetchSlots} />
+    <div className="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto space-y-6">
+        <h1 className="text-4xl font-extrabold text-center text-blue-700">Mall Parking System</h1>
+
+        <div className="grid grid-cols-1 gap-6">
+          <AddSlotForm onAdd={fetchSlots} />
+          <VehicleForm onAdd={addVehicle} slots={slots} />
+        </div>
+
+        <SlotDashboard slots={slots} onUpdate={fetchSlots} />
+      </div>
     </div>
+
   );
 }
 
