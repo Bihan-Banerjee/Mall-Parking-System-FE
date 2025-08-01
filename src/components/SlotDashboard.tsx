@@ -66,13 +66,7 @@ export default function SlotDashboard({ slots, onUpdate }: Readonly<Props>) {
       </div>
 
       {/* Slots */}
-      <h2 className="text-xl font-bold mb-2">Slot Dashboard</h2>
-      <div className="mb-4 flex gap-4">
-        <span>Total: {total}</span>
-        <span>Free: {free}</span>
-        <span>Occupied: {occupied}</span>
-        <span>Maintenance: {maintenance}</span>
-      </div>
+      
       <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
         {paginatedSlots.map((slot) => (
           <SlotCard key={slot.id} slot={slot} onUpdate={onUpdate} />

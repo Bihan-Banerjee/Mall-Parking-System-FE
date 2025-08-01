@@ -47,7 +47,7 @@ export default function VehicleForm({ onAdd, slots }: Props) {
       </select>
 
       <button
-        className="bg-blue-600 text-white px-4 py-2 rounded"
+        className="bg-indigo-600 text-white font-semibold px-4 py-2 rounded-md hover:bg-indigo-700 active:scale-95 transition-transform duration-150"
         onClick={() => {
           if (plate) {
             onAdd(plate, type, overrideSlot || undefined);

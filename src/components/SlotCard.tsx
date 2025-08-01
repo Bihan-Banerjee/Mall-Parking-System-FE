@@ -117,7 +117,7 @@ export default function SlotCard({ slot, onUpdate }: Readonly<Props>) {
 
 
   return (
-    <div className={`p-4 rounded shadow-md border ${color} transition-all`}>
+    <div className="rounded-lg shadow-md p-4 border bg-white transition-all duration-200 hover:shadow-xl hover:-translate-y-1 hover:bg-white/80">
       <h3 className="font-bold text-lg text-gray-800 mb-1">Slot #{slot.number}</h3>
       <p className="text-sm text-gray-600 mb-1">
         Type: <span className="font-medium">{slot.type}</span>

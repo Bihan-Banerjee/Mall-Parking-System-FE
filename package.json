@@ -2,6 +2,7 @@
   "name": "mall-parking-system",
   "version": "0.0.1",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -9,17 +10,26 @@
   },
   "dependencies": {
     "axios": "^1.11.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.536.0",
+    "p5": "^2.0.3",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "simplex-noise": "^4.0.3",
+    "tailwind-merge": "^3.3.1",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@types/node": "^24.1.0",
+    "@types/p5": "^1.7.6",
     "@types/react": "^19.1.9",
     "@types/react-dom": "^19.1.7",
     "@vitejs/plugin-react": "^4.1.0",
-    "autoprefixer": "^10.4.17",
-    "postcss": "^8.4.35",
-    "tailwindcss": "^3.4.1",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17",
     "typescript": "^5.2.2",
-    "vite": "^4.5.0"
+    "vite": "^7.0.6"
   }
 }

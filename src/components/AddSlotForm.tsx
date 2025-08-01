@@ -31,16 +31,17 @@ export default function AddSlotForm({ onAdd }: Readonly<Props>) {
   return (
     <form onSubmit={handleSubmit} className="flex gap-2 items-end mb-4">
       <div>
-        <label htmlFor="slotNumber" className="block text-sm">Slot Number</label>
+        <label htmlFor="slotNumber" className="block text-sm text-white">Slot Number</label>
         <input
           className="border rounded px-2 py-1"
           value={number}
           onChange={(e) => setNumber(e.target.value)}
           required
+          placeholder='Slot Number'
         />
       </div>
       <div>
-        <label htmlFor="slotType" className="block text-sm">Type</label>
+        <label htmlFor="slotType" className="block text-sm text-white">Type</label>
         <select
           className="border rounded px-2 py-1"
           value={type}
@@ -51,7 +52,7 @@ export default function AddSlotForm({ onAdd }: Readonly<Props>) {
           ))}
         </select>
       </div>
-      <button type="submit" className="bg-blue-600 text-white px-3 py-1 rounded">
+      <button type="submit" className="bg-blue-600 text-white font-semibold px-4 py-2 rounded-md hover:bg-blue-700 active:scale-95 transition-transform duration-150">
         Add Slot
       </button>
     </form>
